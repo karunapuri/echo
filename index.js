@@ -131,6 +131,12 @@ restService.post("/video", function(req, res) {
 });
 
 restService.post("/slack-test", function(req, res) {
+  var speech =
+    req.body.result &&
+    req.body.result.parameters &&
+    req.body.result.parameters.echoText
+      ? req.body.result.parameters.echoText
+      : "Seems like some problem. Speak again.";
   var slack_message = {
     text: "Details of JIRA board for Browse and Commerce",
     attachments: [
@@ -186,8 +192,8 @@ restService.post("/slack-test", function(req, res) {
     ]
   };
   return res.json({
-    speech: "speech",
-    displayText: "speech",
+    speech: speech,
+    displayText: speech,
     source: "webhook-echo-sample",
     data: {
       slack: slack_message
